@@ -1,10 +1,11 @@
 # Discord Puppet CLI
 
-A simple cli for controlling your own bot
+A simple cli for controlling your own bot.
 
 ## Installation
 
-Install using npm 
+**Node.js 8.0.0 or newer is required.**
+Install using npm.
 
 ```
 npm install -g discord-puppet-cli
