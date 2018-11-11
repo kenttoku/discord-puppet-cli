@@ -10,7 +10,7 @@ const getGuilds = async client => {
   spinner.start('Finding servers');
   const guilds = await client.guilds.array().map(guild => ({
     name: `${guild.name} (ID: ${guild.id})`,
-    value: { id: guild.id, name: guild.name }
+    value: guild
   }));
 
   if (!guilds.length) {
@@ -23,10 +23,9 @@ const getGuilds = async client => {
   return guilds;
 };
 
-const getChannels = async(client, guildId) => {
+const getChannels = async guild => {
   spinner.start('Finding channels');
-  const guild = await client.guilds.find(guild => guild.id === guildId);
-  const channels = guild.channels.array()
+  const channels = await guild.channels.array()
     .filter(channel => channel.type === 'text')
     .map(channel => ({
       name: `${channel.name} (ID: ${channel.id})`,
@@ -64,7 +63,7 @@ const ask = async client => {
   const { guild } = await inquirer.prompt(prompts.guildPrompt(guilds));
 
   // Prompt user for channel
-  const channels = await getChannels(client, guild.id);
+  const channels = await getChannels(guild);
   const { channel } = await inquirer.prompt(prompts.channelPrompt(channels));
 
   // Promp user for messages
