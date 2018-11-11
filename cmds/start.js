@@ -1,23 +1,18 @@
 const inquirer = require('inquirer');
 const ora = require('ora');
 const Discord = require('discord.js');
+
 const client = new Discord.Client();
 const spinner = ora();
 
-const { TOKEN } = require('../config/config');
 const questions = [
   {
     type: 'confirm',
-    name: 'askAgain',
-    message: 'Continue?',
+    name: 'again',
+    message: 'Send another message?',
     default: true
   }
 ];
-
-const test = [];
-for (let i=0; i<100; i++) {
-  test.push(`test${i}`);
-}
 
 const guildQuestions = guilds => ([
   {
@@ -27,6 +22,23 @@ const guildQuestions = guilds => ([
     choices: guilds
   }
 ]);
+
+const channelQuestions = channels => ([
+  {
+    type: 'list',
+    name: 'channel',
+    message: 'Select a channel',
+    choices: channels
+  }
+]);
+
+const messageQuestions = [
+  {
+    type: 'input',
+    name: 'message',
+    message: 'Enter your message'
+  },
+];
 
 const getGuilds = async client => {
   spinner.start('Finding servers');
@@ -52,11 +64,32 @@ const getChannels = async(client, guildId) => {
     .filter(channel => channel.type === 'text')
     .map(channel => ({
       name: `${channel.name} (ID: ${channel.id})`,
-      value: { id: channel.id, name: channel.name }
+      value: channel
     }));
+
+  if (!channels.length) {
+    spinner.fail();
+    console.error('No channels found');
+    process.exit(0);
+  }
 
   spinner.succeed();
   return channels;
+};
+
+const sendMessage = async(channel) => {
+  const { message } = await inquirer.prompt(messageQuestions);
+  await channel.send(message);
+
+  const { again } = await inquirer.prompt(questions);
+  if (again) {
+    sendMessage(channel);
+  } else {
+    spinner.start('Logging out');
+    await client.destroy();
+    spinner.succeed();
+    process.exit(0);
+  }
 };
 
 const ask = async client => {
@@ -66,22 +99,14 @@ const ask = async client => {
 
   // Prompt user for channel
   const channels = await getChannels(client, guild.id);
-  console.log(channels);
+  const { channel } = await inquirer.prompt(channelQuestions(channels));
 
-  const answers = await inquirer.prompt(questions);
-  if (answers.askAgain) {
-    ask();
-  } else {
-    spinner.start('Logging out');
-    await client.destroy();
-    spinner.succeed();
-    process.exit(0);
-  }
+  // Promp user for messages
+  await sendMessage(channel);
 };
 
 const start = async token => {
   spinner.start('Logging in');
-  token = token || TOKEN;
 
   try {
     await client.login(token);
