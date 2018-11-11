@@ -11,5 +11,8 @@
   "license": "MIT",
   "bin": {
     "puppet-bot": "bin/puppet-bot"
+  },
+  "dependencies": {
+    "minimist": "^1.2.0"
   }
 }
