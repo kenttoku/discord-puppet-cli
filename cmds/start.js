@@ -1,7 +1,7 @@
 require('dotenv').config();
 
-const start = (args) => {
-  let token = args.token || args.t || process.env.TOKEN;
+const start = (token) => {
+  token = token || process.env.TOKEN;
   console.log(token);
 };
 
