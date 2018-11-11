@@ -46,4 +46,4 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 
 ## Authors
 
-Discord Puppet CLI is maintained by $(MAINTAINERS).
+Discord Puppet CLI is maintained by Kent Tokunaga.
