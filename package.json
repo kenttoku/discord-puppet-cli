@@ -1,0 +1,15 @@
+{
+  "name": "puppet-bot-cli",
+  "version": "1.0.0",
+  "description": "A simple CLI to control your own discord bots",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Kent Tokunaga",
+  "license": "MIT",
+  "bin": {
+    "puppet-bot": "bin/puppet-bot"
+  }
+}
