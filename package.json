@@ -6,7 +6,7 @@
   "scripts": {},
   "author": "Kent Tokunaga",
   "license": "MIT",
-  "homepage": "https://github.com/kenttoku/discord-puppet-cli#readme",
+  "homepage": "https://github.com/kenttoku/discord-puppet-cli",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/kenttoku/discord-puppet-cli.git"
