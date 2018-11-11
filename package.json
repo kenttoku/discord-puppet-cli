@@ -1,12 +1,29 @@
 {
-  "name": "discord-bot-cli",
+  "name": "discord-puppet-cli",
   "version": "1.0.0",
   "description": "A simple CLI to control your own discord bots",
   "main": "index.js",
   "scripts": {},
-  "keywords": [],
   "author": "Kent Tokunaga",
   "license": "MIT",
+  "homepage": "https://github.com/kenttoku/discord-puppet-cli#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kenttoku/discord-puppet-cli.git"
+  },
+  "engines": {
+    "node": ">=8"
+  },
+  "keywords": [
+    "discord",
+    "puppet",
+    "bot",
+    "cli"
+  ],
+  "bin": {
+    "discord-puppet": "bin/discord-puppet"
+  },
+  "preferGlobal": true,
   "dependencies": {
     "commander": "^2.19.0",
     "discord.js": "^11.4.2",

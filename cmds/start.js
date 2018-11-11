@@ -1,44 +1,10 @@
 const inquirer = require('inquirer');
 const ora = require('ora');
 const Discord = require('discord.js');
+const prompts = require('../utils/prompts');
 
 const client = new Discord.Client();
 const spinner = ora();
-
-const questions = [
-  {
-    type: 'confirm',
-    name: 'again',
-    message: 'Send another message?',
-    default: true
-  }
-];
-
-const guildQuestions = guilds => ([
-  {
-    type: 'list',
-    name: 'guild',
-    message: 'Select a server',
-    choices: guilds
-  }
-]);
-
-const channelQuestions = channels => ([
-  {
-    type: 'list',
-    name: 'channel',
-    message: 'Select a channel',
-    choices: channels
-  }
-]);
-
-const messageQuestions = [
-  {
-    type: 'input',
-    name: 'message',
-    message: 'Enter your message'
-  },
-];
 
 const getGuilds = async client => {
   spinner.start('Finding servers');
@@ -78,10 +44,10 @@ const getChannels = async(client, guildId) => {
 };
 
 const sendMessage = async(channel) => {
-  const { message } = await inquirer.prompt(messageQuestions);
+  const { message } = await inquirer.prompt(prompts.messagePrompt);
   await channel.send(message);
 
-  const { again } = await inquirer.prompt(questions);
+  const { again } = await inquirer.prompt(prompts.repeatPrompt);
   if (again) {
     sendMessage(channel);
   } else {
@@ -95,11 +61,11 @@ const sendMessage = async(channel) => {
 const ask = async client => {
   // Prompt user For guild (server)
   const guilds = await getGuilds(client);
-  const { guild } = await inquirer.prompt(guildQuestions(guilds));
+  const { guild } = await inquirer.prompt(prompts.guildPrompt(guilds));
 
   // Prompt user for channel
   const channels = await getChannels(client, guild.id);
-  const { channel } = await inquirer.prompt(channelQuestions(channels));
+  const { channel } = await inquirer.prompt(prompts.channelPrompt(channels));
 
   // Promp user for messages
   await sendMessage(channel);
