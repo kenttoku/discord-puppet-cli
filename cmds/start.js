@@ -78,7 +78,7 @@ const start = async token => {
     spinner.succeed();
     ask(client);
   } catch (e) {
-    spinner.fail('Unable to log in');
+    spinner.fail('Unable to log in. Please make sure your token is valid.');
     process.exit(1);
   }
 };

@@ -1,6 +1,6 @@
 {
   "name": "discord-puppet-cli",
-  "version": "1.0.1",
+  "version": "1.0.3",
   "description": "A simple CLI to control your own discord bots",
   "main": "index.js",
   "scripts": {},

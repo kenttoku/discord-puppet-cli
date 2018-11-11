@@ -30,7 +30,7 @@ Options:
 -h, --help     output usage information
 
 Commands:
-start [token]
+start <token>
 ```
 
 ## Built With
